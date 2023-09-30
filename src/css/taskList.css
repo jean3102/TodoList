@@ -1,0 +1,104 @@
+.list {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.containerButton {
+	padding-top: 1em;
+	display: flex;
+	gap: 2em;
+}
+
+.containerButton button {
+	width: 150px;
+	height: 3em;
+	background-color: rgb(17, 127, 131);
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 0.3em;
+}
+
+.list ul li {
+	height: 1.5em;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid rgba(128, 128, 128, 0.363);
+	min-width: 500px;
+	padding-left: 1em;
+	padding-right: 1em;
+	border-radius: 0.2em;
+	margin-top: 1em;
+	padding: 0.5em;
+}
+
+.list ul {
+	height: 35vh;
+	overflow-y: auto;
+	margin: 1em;
+}
+
+.leftList {
+	flex: 6;
+}
+
+.leftList p {
+	word-break: break-all;
+	font-size: 0.8em;
+}
+
+.rightList {
+	flex: 1;
+	display: flex;
+	gap: 0.5em;
+}
+
+.rightList :nth-child(2) {
+	color: orange;
+}
+
+.rightList :nth-child(3) {
+	color: red;
+}
+
+.footList {
+	display: flex;
+	justify-content: space-between;
+	gap: 1em;
+}
+
+.footList button {
+	width: 150px;
+	height: 2.5em;
+	background-color: red;
+	color: white;
+	outline: none;
+	border: none;
+	border-radius: 0.3em;
+}
+
+@media (300px <= width <= 600px) {
+	.list {
+		width: 340px;
+	}
+	.containerButton {
+		display: flex;
+		gap: 0.5em;
+	}
+
+	.containerButton button {
+		width: 80px;
+	}
+
+	.list ul li {
+		min-width: 300px;
+	}
+	.footList {
+		align-items: center;
+		gap: 0.5em;
+		flex-direction: column;
+	}
+}
