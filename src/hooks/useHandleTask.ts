@@ -1,22 +1,43 @@
 import { useState } from 'react';
 import { Task } from '../interfaces/task';
+import Swal from 'sweetalert2';
 
 const useHandleTask = () => {
-	console.log(`🚀 ------------ useHandleTask:`)
 
 	const [taskList, setTaskList] = useState<Task[]>([]);
 
-	const addTask = (task: string) => {
-		if (existTask(task)) return alert('exist');
+	const addTask = (id: number | null, task: string) => {
+		if (id) {
+			editTask({ id: id, task: task });
+			return true;
+		}
+
+		if (existTask(task)) {
+			throw new Error('This Task  has already been registered!!');
+		}
 		setTaskList([
 			...taskList,
 			{ id: generateId(), task: task, completed: false },
 		]);
+		return true;
 	};
 
 	const deleteTask = (id: number) => {
-		const newTaskList = taskList.filter((task) => task.id !== id);
-		setTaskList(newTaskList);
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				const newTaskList = taskList.filter((task) => task.id !== id);
+				setTaskList(newTaskList);
+				Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+			}
+		});
 	};
 
 	const deleteAllTask = () => {
@@ -60,7 +81,6 @@ const useHandleTask = () => {
 		deleteTask,
 		deleteAllTask,
 		deleteDoneTask,
-		editTask,
 		completeTask,
 	};
 };

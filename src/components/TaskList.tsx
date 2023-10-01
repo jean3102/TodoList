@@ -56,11 +56,12 @@ const TaskList = ({
 							<div className="leftList">
 								{task.completed ? (
 									<p>
-										<s style={{ color: 'red' }}>{task.task}</s>
+										<span> {key+=1} - </span>
+										<s style={{ color: 'red' }}> {task.task}</s>
 									</p>
 								) : (
 									<p>
-										{key + 1} - {task.task}
+										{key+=1} - {task.task}
 									</p>
 								)}
 							</div>

@@ -3,6 +3,7 @@ import TaskList from './TaskList';
 import useHandleTask from '../hooks/useHandleTask';
 import { Task } from '../interfaces/task';
 import '../css/task.css';
+import { handleAlert } from '../helpers/alert';
 
 const TaskComponent = () => {
 	const [task, setTask] = useState('');
@@ -12,7 +13,6 @@ const TaskComponent = () => {
 		getList,
 		addTask,
 		deleteTask,
-		editTask,
 		completeTask,
 		deleteAllTask,
 		deleteDoneTask,
@@ -22,23 +22,29 @@ const TaskComponent = () => {
 		taskRef.current?.focus();
 	}, []);
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (taskRef.current && task === '') {
-			taskRef.current.style.border = '1px solid gray';
-		}
+		handleChangeValidation();
 		setTask(event.target.value);
 	};
 
+	const handleChangeValidation = () => {
+		if (taskRef.current && task.trim().length === 34) {
+			taskRef.current.style.border = '1px solid red';
+			setTimeout(() => {
+				if (taskRef.current) taskRef.current.style.border = '1px solid gray';
+			}, 1500);
+			return false;
+		}
+	};
 	const restForm = () => {
 		setTask('');
 		taskRef.current?.focus();
 	};
 
-	const handleValidation = (): boolean => {
+	const handleSubmitValidation = (): boolean => {
 		if (taskRef.current && task.trim() === '') {
 			taskRef.current.style.border = '1px solid red';
 			return false;
 		}
-
 		return true;
 	};
 
@@ -50,14 +56,15 @@ const TaskComponent = () => {
 
 	const handleSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		if (!handleValidation()) return;
 
-		if (taskId) {
-			editTask({ id: taskId, task: task });
-		} else {
-			addTask(task);
+		if (!handleSubmitValidation()) return;
+
+		try {
+			addTask(taskId, task);
+			restForm();
+		} catch (error) {
+			handleAlert(error as Error);
 		}
-		restForm();
 	};
 
 	return (
@@ -66,6 +73,7 @@ const TaskComponent = () => {
 				<form onSubmit={handleSubmit}>
 					<h2>Todo Input</h2>
 					<input
+						maxLength={35}
 						value={task}
 						ref={taskRef}
 						onChange={handleChange}
