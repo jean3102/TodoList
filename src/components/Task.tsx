@@ -3,7 +3,7 @@ import TaskList from './TaskList';
 import useHandleTask from '../hooks/useHandleTask';
 import { Task } from '../interfaces/task';
 import '../css/task.css';
-import { handleAlert } from '../helpers/alert';
+import { alertWarning } from '../helpers/alert';
 
 const TaskComponent = () => {
 	const [task, setTask] = useState('');
@@ -22,17 +22,18 @@ const TaskComponent = () => {
 		taskRef.current?.focus();
 	}, []);
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		handleChangeValidation();
+		if (handleChangeValidation()) return;
 		setTask(event.target.value);
 	};
 
+	// return true if input have more than 35 characters
 	const handleChangeValidation = () => {
 		if (taskRef.current && task.trim().length === 34) {
 			taskRef.current.style.border = '1px solid red';
 			setTimeout(() => {
 				if (taskRef.current) taskRef.current.style.border = '1px solid gray';
 			}, 1500);
-			return false;
+			return true;
 		}
 	};
 	const restForm = () => {
@@ -63,7 +64,7 @@ const TaskComponent = () => {
 			addTask(taskId, task);
 			restForm();
 		} catch (error) {
-			handleAlert(error as Error);
+			alertWarning(error as Error);
 		}
 	};
 

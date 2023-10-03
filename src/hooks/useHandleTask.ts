@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Task } from '../interfaces/task';
-import Swal from 'sweetalert2';
+import { alertConfirm, alertSuccess } from '../helpers/alert';
 
 const useHandleTask = () => {
-
 	const [taskList, setTaskList] = useState<Task[]>([]);
 
 	const addTask = (id: number | null, task: string) => {
@@ -19,34 +18,35 @@ const useHandleTask = () => {
 			...taskList,
 			{ id: generateId(), task: task, completed: false },
 		]);
-		return true;
 	};
 
-	const deleteTask = (id: number) => {
-		Swal.fire({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this!",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!',
-		}).then((result) => {
-			if (result.isConfirmed) {
-				const newTaskList = taskList.filter((task) => task.id !== id);
-				setTaskList(newTaskList);
-				Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-			}
-		});
+	const deleteTask = async (id: number) => {
+		const isConfirm = await alertConfirm();
+
+		if (isConfirm) {
+			const newTaskList = taskList.filter((task) => task.id !== id);
+			setTaskList(newTaskList);
+			alertSuccess("'Deleted!", 'Your file has been deleted');
+		}
 	};
 
-	const deleteAllTask = () => {
-		setTaskList([]);
+	const deleteAllTask = async () => {
+		const isConfirm = await alertConfirm();
+
+		if (isConfirm) {
+			setTaskList([]);
+			alertSuccess("'Deleted!", 'Your file has been deleted');
+		}
 	};
 
-	const deleteDoneTask = () => {
-		const newTaskList = taskList.filter((task) => !task.completed);
-		setTaskList(newTaskList);
+	const deleteDoneTask = async () => {
+		const isConfirm = await alertConfirm();
+
+		if (isConfirm) {
+			const newTaskList = taskList.filter((task) => !task.completed);
+			setTaskList(newTaskList);
+			alertSuccess("'Deleted!", 'Your file has been deleted');
+		}
 	};
 
 	const editTask = (value: Task) => {
