@@ -21,6 +21,7 @@ const useHandleTask = () => {
 	};
 
 	const deleteTask = async (id: number) => {
+		console.log(`🚀 ------------ id:`, id)
 		const isConfirm = await alertConfirm();
 
 		if (isConfirm) {

@@ -3,10 +3,10 @@ import TaskList from './TaskList';
 import useHandleTask from '../hooks/useHandleTask';
 import { Task } from '../interfaces/task';
 import '../css/task.css';
-import { alertWarning } from '../helpers/alert';
+import { alertError, alertWarning } from '../helpers/alert';
 
 const TaskComponent = () => {
-	const [task, setTask] = useState('');
+	const [task, setTask] = useState('hola, livi como estas');
 	const [taskId, setTaskId] = useState<null | number>(null);
 	const taskRef = useRef<HTMLInputElement | null>(null);
 	const {
@@ -22,7 +22,7 @@ const TaskComponent = () => {
 		taskRef.current?.focus();
 	}, []);
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (handleChangeValidation()) return;
+		if (!handleChangeValidation()) return;
 		setTask(event.target.value);
 	};
 
@@ -30,11 +30,14 @@ const TaskComponent = () => {
 	const handleChangeValidation = () => {
 		if (taskRef.current && task.trim().length === 34) {
 			taskRef.current.style.border = '1px solid red';
-			setTimeout(() => {
-				if (taskRef.current) taskRef.current.style.border = '1px solid gray';
-			}, 1500);
-			return true;
+			resetInputColor()
+			alertWarning('You can not type more than 35 characters')
+			setTask('');
+			return false;
 		}
+
+		return true
+		
 	};
 	const restForm = () => {
 		setTask('');
@@ -44,10 +47,17 @@ const TaskComponent = () => {
 	const handleSubmitValidation = (): boolean => {
 		if (taskRef.current && task.trim() === '') {
 			taskRef.current.style.border = '1px solid red';
+			resetInputColor()
 			return false;
 		}
 		return true;
 	};
+
+	const resetInputColor = () => {
+		setTimeout(() => {
+			if (taskRef.current) taskRef.current.style.border = '1px solid gray';
+		}, 1500);
+	}
 
 	const handleEdit = (value: Task) => {
 		taskRef.current?.focus();
@@ -64,7 +74,7 @@ const TaskComponent = () => {
 			addTask(taskId, task);
 			restForm();
 		} catch (error) {
-			alertWarning(error as Error);
+			alertError(error as Error);
 		}
 	};
 

@@ -1,7 +1,11 @@
 import Swal from 'sweetalert2';
 
-const alertWarning = (errorMSJ: Error) => {
-	Swal.fire('Alert!', errorMSJ.message, 'warning');
+const alertWarning = (msj: string) => {
+	Swal.fire('Warning!', msj, 'warning');
+};
+
+const alertError = (errorMSJ: Error) => {
+	Swal.fire('Alert!', errorMSJ.message, 'error');
 };
 
 const alertSuccess = (title: string, msj: string) => {
@@ -22,4 +26,4 @@ const alertConfirm = async (): Promise<boolean> => {
 	return alert.isConfirmed;
 };
 
-export { alertWarning, alertSuccess, alertConfirm };
+export { alertWarning, alertError, alertSuccess, alertConfirm };
