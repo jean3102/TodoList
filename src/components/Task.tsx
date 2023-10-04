@@ -6,7 +6,7 @@ import '../css/task.css';
 import { alertError, alertWarning } from '../helpers/alert';
 
 const TaskComponent = () => {
-	const [task, setTask] = useState('hola, livi como estas');
+	const [task, setTask] = useState('');
 	const [taskId, setTaskId] = useState<null | number>(null);
 	const taskRef = useRef<HTMLInputElement | null>(null);
 	const {
