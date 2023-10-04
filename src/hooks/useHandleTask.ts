@@ -36,7 +36,7 @@ const useHandleTask = () => {
 
 		if (isConfirm) {
 			setTaskList([]);
-			alertSuccess("'Deleted!", 'Your file has been deleted');
+			alertSuccess("'Deleted!", 'Your record has been deleted');
 		}
 	};
 
