@@ -27,7 +27,7 @@ const useHandleTask = () => {
 		if (isConfirm) {
 			const newTaskList = taskList.filter((task) => task.id !== id);
 			setTaskList(newTaskList);
-			alertSuccess("'Deleted!", 'Your file has been deleted');
+			alertSuccess("'Deleted!", 'Your record has been deleted');
 		}
 	};
 
