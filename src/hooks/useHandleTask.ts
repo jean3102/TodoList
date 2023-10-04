@@ -78,7 +78,7 @@ const useHandleTask = () => {
 	const checkTaskDone = () => {
 		const taskDone = taskList.find((task) => task.completed);
 		if (taskDone === undefined) {
-			alertWarning('No complete task to delete');
+			alertWarning('No complete tasks to delete');
 			return false;
 		}
 		return true;
