@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Task } from '../interfaces/task';
-import { alertConfirm, alertSuccess } from '../helpers/alert';
+import { alertConfirm, alertSuccess, alertWarning } from '../helpers/alert';
 
 const useHandleTask = () => {
 	const [taskList, setTaskList] = useState<Task[]>([]);
@@ -21,13 +21,12 @@ const useHandleTask = () => {
 	};
 
 	const deleteTask = async (id: number) => {
-		console.log(`🚀 ------------ id:`, id)
 		const isConfirm = await alertConfirm();
 
 		if (isConfirm) {
 			const newTaskList = taskList.filter((task) => task.id !== id);
 			setTaskList(newTaskList);
-			alertSuccess("'Deleted!", 'Your record has been deleted');
+			alertSuccess('Deleted!', 'Your record has been deleted');
 		}
 	};
 
@@ -36,17 +35,18 @@ const useHandleTask = () => {
 
 		if (isConfirm) {
 			setTaskList([]);
-			alertSuccess("'Deleted!", 'Your record has been deleted');
+			alertSuccess('Deleted!', 'Your record has been deleted');
 		}
 	};
 
 	const deleteDoneTask = async () => {
+		if (!checkTaskDone()) return;
 		const isConfirm = await alertConfirm();
 
 		if (isConfirm) {
 			const newTaskList = taskList.filter((task) => !task.completed);
 			setTaskList(newTaskList);
-			alertSuccess("'Deleted!", 'Your record has been deleted');
+			alertSuccess('Deleted!', 'Your record has been deleted');
 		}
 	};
 
@@ -71,7 +71,17 @@ const useHandleTask = () => {
 
 	const generateId = () => {
 		if (taskList.length === 0) return 1;
-		return Math.max(...taskList.map((item) => item.id)) + 1; // get last added id  and add 1
+		return Math.max(...taskList.map((item) => item.id)) + 1; // get last added id and add 1
+	};
+
+	// check if there are completed tasks to delete
+	const checkTaskDone = () => {
+		const taskDone = taskList.find((task) => task.completed);
+		if (taskDone === undefined) {
+			alertWarning('No complete task to delete');
+			return false;
+		}
+		return true;
 	};
 
 	const getList = (): Task[] => taskList.sort((a, b) => b.id - a.id);
