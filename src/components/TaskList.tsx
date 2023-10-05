@@ -4,7 +4,7 @@ import '../css/taskList.css';
 import { FaPen, FaTrashAlt } from 'react-icons/fa/';
 
 interface TaskListProps {
-	getList: () => Task[];
+	taskList: Task[];
 	deleteTask: (id: number) => void;
 	editTask: (value: Task) => void;
 	completeTask: (id: number) => void;
@@ -13,7 +13,7 @@ interface TaskListProps {
 }
 
 const TaskList = ({
-	getList,
+	taskList,
 	deleteTask,
 	editTask,
 	completeTask,
@@ -23,16 +23,16 @@ const TaskList = ({
 	const [list, setList] = useState<Task[]>([]);
 
 	useEffect(() => {
-		setList(getList);
-	}, [getList]);
+		setList(taskList);
+	}, [taskList]);
 
 	const completed = () => {
-		const newTaskList = getList().filter((task) => task.completed);
+		const newTaskList = taskList.filter((task) => task.completed);
 		setList(newTaskList);
 	};
 
 	const Pending = () => {
-		const newTaskList = getList().filter((task) => !task.completed);
+		const newTaskList = taskList.filter((task) => !task.completed);
 		setList(newTaskList);
 	};
 
@@ -43,7 +43,7 @@ const TaskList = ({
 				<div className="containerButton">
 					<button
 						onClick={() => {
-							setList(getList());
+							setList(taskList);
 						}}>
 						All
 					</button>
@@ -56,12 +56,12 @@ const TaskList = ({
 							<div className="leftList">
 								{task.completed ? (
 									<p>
-										<span> {key+=1} - </span>
+										<span> {(key += 1)} - </span>
 										<s style={{ color: 'red' }}> {task.task}</s>
 									</p>
 								) : (
 									<p>
-										{key+=1} - {task.task}
+										{(key += 1)} - {task.task}
 									</p>
 								)}
 							</div>

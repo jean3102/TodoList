@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Task } from '../interfaces/task';
 import { alertConfirm, alertSuccess, alertWarning } from '../helpers/alert';
 
 const useHandleTask = () => {
 	const [taskList, setTaskList] = useState<Task[]>([]);
+
+	useEffect(() => {}, []);
 
 	const addTask = (id: number | null, task: string) => {
 		if (id) {
@@ -18,6 +20,7 @@ const useHandleTask = () => {
 			...taskList,
 			{ id: generateId(), task: task, completed: false },
 		]);
+
 	};
 
 	const deleteTask = async (id: number) => {
@@ -84,10 +87,8 @@ const useHandleTask = () => {
 		return true;
 	};
 
-	const getList = (): Task[] => taskList.sort((a, b) => b.id - a.id);
-
 	return {
-		getList,
+		taskList,
 		addTask,
 		deleteTask,
 		deleteAllTask,

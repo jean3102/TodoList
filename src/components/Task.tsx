@@ -10,7 +10,7 @@ const TaskComponent = () => {
 	const [taskId, setTaskId] = useState<null | number>(null);
 	const taskRef = useRef<HTMLInputElement | null>(null);
 	const {
-		getList,
+		taskList,
 		addTask,
 		deleteTask,
 		completeTask,
@@ -96,7 +96,7 @@ const TaskComponent = () => {
 			</section>
 			<section className="column">
 				<TaskList
-					getList={getList}
+					taskList={taskList}
 					deleteTask={deleteTask}
 					editTask={handleEdit}
 					completeTask={completeTask}

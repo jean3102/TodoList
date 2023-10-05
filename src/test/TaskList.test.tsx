@@ -5,7 +5,7 @@ describe('TaskList Component', () => {
 	test('check if list if rendered', () => {
 		render(
 			<TaskList
-				getList={() => []}
+				taskList={[]}
 				editTask={() => {}}
 				deleteTask={() => {}}
 				completeTask={() => {}}
