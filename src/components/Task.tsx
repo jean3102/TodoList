@@ -21,6 +21,7 @@ const TaskComponent = () => {
 	useEffect(() => {
 		taskRef.current?.focus();
 	}, []);
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!handleChangeValidation()) return;
 		setTask(event.target.value);
@@ -30,14 +31,13 @@ const TaskComponent = () => {
 	const handleChangeValidation = () => {
 		if (taskRef.current && task.trim().length === 34) {
 			taskRef.current.style.border = '1px solid red';
-			resetInputColor()
-			alertWarning('You can not type more than 35 characters')
+			resetInputColor();
+			alertWarning('You can not type more than 35 characters');
 			setTask('');
 			return false;
 		}
 
-		return true
-		
+		return true;
 	};
 	const restForm = () => {
 		setTask('');
@@ -47,7 +47,7 @@ const TaskComponent = () => {
 	const handleSubmitValidation = (): boolean => {
 		if (taskRef.current && task.trim() === '') {
 			taskRef.current.style.border = '1px solid red';
-			resetInputColor()
+			resetInputColor();
 			return false;
 		}
 		return true;
@@ -57,7 +57,7 @@ const TaskComponent = () => {
 		setTimeout(() => {
 			if (taskRef.current) taskRef.current.style.border = '1px solid gray';
 		}, 1500);
-	}
+	};
 
 	const handleEdit = (value: Task) => {
 		taskRef.current?.focus();
