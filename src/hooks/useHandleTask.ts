@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Task } from '../interfaces/task';
 import { alertConfirm, alertSuccess, alertWarning } from '../helpers/alert';
 
 const useHandleTask = () => {
 	const [taskList, setTaskList] = useState<Task[]>([]);
-
-	useEffect(() => {}, []);
 
 	const addTask = (id: number | null, task: string) => {
 		if (id) {
