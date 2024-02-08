@@ -1,7 +1,7 @@
 
 # Task List
 
-In the following repository I show an application to `create`, `read`, `update` and `delete` tasks. In this example I use react and type as development.
+In the following repository, I show an application to `create`, `read`, `update` and `delete` tasks. In this example, I use react and typescript.
  ### Install dependencies
 
 
